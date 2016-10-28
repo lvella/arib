@@ -93,9 +93,8 @@ class ClosedCaptionArea(object):
     if row >= num_rows:
       r = float(row-1)/2.0
 
-    c = col
-    if c >= num_cols:
-      c = float(col-1)/2.0
+    # inferred by furigana alignment data
+    c = float(col)/2.0
     return Pos(self.UL.x + c * (self._CharacterDim.width + self._char_spacing), self.UL.y + r * (self._CharacterDim.height + self._line_spacing))
 
 class ASSFile(object):
@@ -246,7 +245,7 @@ def control_character(formatter, csi, timestamp):
   if a_match:
     x = a_match.group('x')
     y = a_match.group('y')
-    formatter._current_lines.append( Dialog( u'{{\\r{style}}}{color}{{\\pos({x},{y})}}{{\\an7}}'.format(color=formatter._current_color, style=formatter._current_style, x=x, y=y)))
+    formatter._current_lines.append( Dialog( u'{{\\r{style}}}{color}{{\\pos({x},{y})}}{{\\an1}}'.format(color=formatter._current_color, style=formatter._current_style, x=x, y=y)))
     return
 
 pos_regex = ur'({\\pos\(\d{1,4},\d{1,4}\)})'
